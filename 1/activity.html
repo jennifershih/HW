@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+	<title>IM Camp</title>
+</head>
+
+<body>
+	<br>
+	<div class="container">
+		<div class="d-flex flex-row">
+			<h1>IM Camp</h1>
+
+			<a class="btn btn-outline-primary align-self-center ml-auto" href="mailto:beauty@gmail.com">歡迎來信</a>
+		</div>
+		<hr>
+		<form action="" method="post">
+			<div class="form-group row">
+				<label class="col-2 col-form-label">名字</label>
+				<div class="col-10">
+					<input class="form-control" type="text" name="uname">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">學校</label>
+				<div class="col-10">
+					<input class="form-control" type="text" name="uschool">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">性別</label>
+				<div class="col-10">
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="radio" class="form-check-input" name="gender" value="male">Male
+					  </label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+							<input type="radio" class="form-check-input" name="gender" value="male">Female
+					  </label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">電話</label>
+				<div class="col-10">
+					<input class="form-control" type="text" name="uphone" placeholder=07-6912345>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">郵件</label>
+				<div class="col-10">
+					<input class="form-control" type="text" name="uemail" placeholder="jennifershih@gmail.com">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">生日</label>
+				<div class="col-10">
+					<input class="form-control" type="date" name="ubirth">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-2 col-form-label">興趣</label>
+				<div class="col-10">
+					<div class="form-check">
+						<label class="form-check-label">
+				    <input class="form-check-input" type="checkbox" name="movie" value="movie">movie
+				  </label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+						<input class="form-check-input" type="checkbox" name="jog" value="jog">jog
+					</label>
+					</div>
+					<div class="form-check">
+						<label class="form-check-label">
+						<input class="form-check-input" type="checkbox" name="swim" value="swim">swim
+					</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-2 col-form-label">城市</label>
+				<div class="col-10">
+					<select class="form-control form-control-lg" name="list">
+						<option value="Taipei">Taipei</option>
+			 			<option value="Kaohsiung">Kaohsiung</option>
+			 			<option value="Tainan">Tainan</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>有問題可以留訊息給我們:</label>
+				<textarea class="form-control" name="utext" rows="3"></textarea>
+			</div>
+			<button type="submit" class="btn btn-outline-primary">Submit</button>
+			<button type="reset" class="btn btn-outline-warning">reset</button>
+		</form>
+	</div>
+</body>
+
+</html>
