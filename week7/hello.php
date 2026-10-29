@@ -1,52 +1,58 @@
 <?php
+/**
+ * Save a submitted person to MySQL and list everyone saved so far.
+ *
+ * Connection settings come from environment variables (DB_HOST, DB_USER,
+ * DB_PASSWORD, DB_NAME) so no password is stored in the code.
+ * Table: see schema.sql.
+ */
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-//連結mysql主機，一個檔案做一次
-$link=@mysqli_connect( 
-	'localhost', //MYSQL主機名稱
-	'root',      //使用者名稱
-	'123456', //密碼
-	'php20170413');   //預設使用的資料庫名稱
-	
-
-if($link){
-	echo "DB connected";
-}else{
-	echo "DB connection failed";
+function e(?string $value): string
+{
+    return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
 }
 
-$uname=$_POST["uname"];
-$school=$_POST["school"];
-$birth=date($_POST["birth"]);
-$city=$_POST["city"];
-
-$sql2="INSERT INTO phpim(name,school,birth,city)VALUES('$uname','$school','$birth','$city');";
-
-$result=mysqli_query($link,$sql2); 
-$result=mysqli_query($link,"SELECT * FROM phpim");
-
-echo "請填入資料";
-
-echo "<table border=1>";
-while ($row=mysqli_fetch_assoc($result)) {
-echo "<tr>";
-	echo "<td>";
-	echo $row["name"];
-	echo "</td>";
-
-	echo "<td>";
-	echo $row["school"];
-	echo "</td>";
-
-	echo "<td>";
-	echo $row["birth"];
-	echo "</td>";
-
-	echo "<td>";
-	echo $row["city"];
-	echo "</td>";
-echo "</tr>";
+try {
+    $link = new mysqli(
+        getenv('DB_HOST') ?: 'localhost',
+        getenv('DB_USER') ?: 'root',
+        getenv('DB_PASSWORD') ?: '',
+        getenv('DB_NAME') ?: 'php20170413'
+    );
+    $link->set_charset('utf8mb4');
+} catch (mysqli_sql_exception $e) {
+    http_response_code(500);
+    exit('DB connection failed');
 }
-echo "</table>";
 
-mysqli_close($link); //關閉與mysql主機的連結，在檔案最後面做
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && trim($_POST['uname'] ?? '') !== '') {
+    // Prepared statement: user input is never pasted into the SQL text.
+    $stmt = $link->prepare('INSERT INTO phpim (name, school, birth, city) VALUES (?, ?, ?, ?)');
+    $uname = trim($_POST['uname'] ?? '');
+    $school = trim($_POST['school'] ?? '');
+    $birth = trim($_POST['birth'] ?? '');
+    $city = trim($_POST['city'] ?? '');
+    $stmt->bind_param('ssss', $uname, $school, $birth, $city);
+    $stmt->execute();
+}
+
+$rows = $link->query('SELECT name, school, birth, city FROM phpim')->fetch_all(MYSQLI_ASSOC);
+$link->close();
 ?>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<meta charset="UTF-8">
+	<title>Guest list</title>
+</head>
+<body>
+	<p><a href="index.html">請填入資料</a></p>
+	<table border="1">
+		<tr><th>name</th><th>school</th><th>birth</th><th>city</th></tr>
+		<?php foreach ($rows as $row): ?>
+		<tr><td><?= e($row['name']) ?></td><td><?= e($row['school']) ?></td><td><?= e($row['birth']) ?></td><td><?= e($row['city']) ?></td></tr>
+		<?php endforeach; ?>
+	</table>
+</body>
+</html>
